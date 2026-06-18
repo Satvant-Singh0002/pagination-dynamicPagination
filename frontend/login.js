@@ -11,8 +11,8 @@ document.getElementById('loginForm').addEventListener('submit',async(e)=>{
     console.log('password',password);
     try {
         const response=await axios.post('http://localhost:4000/login/Userlogin',loginObj);
-        alert('logged successfully');
-        
+         localStorage.setItem('token', response.data.token);
+        window.location.href="expense.html";
     } catch (error) {
         if(error.response.status===404){
             alert('user not found');

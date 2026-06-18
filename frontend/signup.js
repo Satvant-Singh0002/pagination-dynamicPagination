@@ -12,7 +12,8 @@ document.getElementById('signupForm').addEventListener('submit',async(e)=>{
     try {
         const response=await axios.post('http://localhost:4000/expenseUser/addUser',
             userObj
-        )
+        );
+          window.location.href="login.html";
           console.log(response.data);
           document.getElementById('signupForm').reset();
     } catch (error) {
