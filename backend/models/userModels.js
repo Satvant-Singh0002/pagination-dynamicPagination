@@ -20,6 +20,10 @@ const User=db.define('user',{
     password:{
         type:DataTypes.STRING,
         allowNull:false
-    }
+    },
+     isPremiumUser: {
+  type: DataTypes.BOOLEAN,
+  defaultValue: false,
+},
 })
 module.exports=User;

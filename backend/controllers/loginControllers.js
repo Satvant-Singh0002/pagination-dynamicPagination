@@ -20,6 +20,7 @@ const login = async (req, res) => {
         {
           userId: user.id,
           email: user.email,
+          isPremiumUser: user.isPremiumUser,
         },
         process.env.JWT_SECRET,
         {

@@ -170,3 +170,24 @@ a:hover{
     align-items:flex-start;
     gap:40px;   /* Space between form and dashboard */
 }
+/* premium btn */
+.premium-btn{
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+
+    padding: 12px 20px;
+    width: auto;
+
+    background: #ffb300;
+    color: #000;
+    border: none;
+    border-radius: 30px;
+
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    z-index: 1000;
+}

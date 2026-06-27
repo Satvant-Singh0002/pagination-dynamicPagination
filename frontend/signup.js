@@ -14,7 +14,7 @@ document.getElementById('signupForm').addEventListener('submit',async(e)=>{
             userObj
         );
           window.location.href="login.html";
-          console.log(response.data);
+          
           document.getElementById('signupForm').reset();
     } catch (error) {
        

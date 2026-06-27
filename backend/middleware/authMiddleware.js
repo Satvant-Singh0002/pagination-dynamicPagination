@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 
 module.exports = (req, res, next) => {
+   
     try {
         const token = req.header('Authorization');
 
@@ -8,8 +9,9 @@ module.exports = (req, res, next) => {
             token,
             process.env.JWT_SECRET
         );
-
+         
         req.user = decoded;
+
         next();
     } catch (err) {
         return res.status(401).json({
