@@ -13,6 +13,7 @@ const expenseRoutes=require('./Routes/expenseRoutes');
 const userRoutes=require('./Routes/userRoutes');
 const loginRoutes=require('./Routes/loginRoutes')
 const paymentRoutes=require('./Routes/paymentRoutes');
+const premiumRoutes = require('./Routes/premiumRoutes');
 
 
 require('./models');
@@ -25,6 +26,7 @@ app.use('/expense',expenseRoutes);
 app.use('/expenseUser',userRoutes);
 app.use('/login',loginRoutes);
 app.use('/premium',paymentRoutes);
+app.use('/premium', premiumRoutes);
 db.sync({alter:true}).then(()=>{
     
 const port = 4000;

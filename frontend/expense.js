@@ -52,12 +52,23 @@ const payload = JSON.parse(atob(token.split(".")[1]));
 
 const premiumBtn = document.getElementById("premiumBtn");
 
+// if (payload.isPremiumUser) {
+//     premiumBtn.innerText = "⭐ Premium User";
+//     premiumBtn.disabled = true;
+// } else {
+//     premiumBtn.innerText = "BuyPremium";
+//     premiumBtn.disabled = false;
+
+// }
+const premiumSection = document.getElementById("premiumSection");
+const leaderboardBtn = document.getElementById("leaderboardBtn");
+
 if (payload.isPremiumUser) {
-    premiumBtn.innerText = "⭐ Premium User";
-    premiumBtn.disabled = true;
+    premiumBtn.style.display = "none";
+    premiumSection.style.display = "flex";
 } else {
-    premiumBtn.innerText = "BuyPremium";
-    premiumBtn.disabled = false;
+    premiumBtn.style.display = "inline-block";
+    premiumSection.style.display = "none";
 }
     const response = await axios.get("http://localhost:4000/expense/getExpense", {
       headers: { Authorization: token },
@@ -118,9 +129,14 @@ async function verifyAndShowResult(orderId) {
 
   localStorage.setItem("token", response.data.token);
 
+  // const premiumBtn = document.getElementById("premiumBtn");
+  // premiumBtn.innerText = "⭐ PremiumUser show leaderboard";
+  // premiumBtn.disabled = true;
   const premiumBtn = document.getElementById("premiumBtn");
-  premiumBtn.innerText = "⭐ Premium User";
-  premiumBtn.disabled = true;
+const premiumSection = document.getElementById("premiumSection");
+
+premiumBtn.style.display = "none";
+premiumSection.style.display = "flex";
 
   alert("🎉 Transaction Successful! You are now a Premium Member.");
 
@@ -133,3 +149,6 @@ async function verifyAndShowResult(orderId) {
   }
 }
 
+document.getElementById('leaderboardBtn').addEventListener('click', () => {
+  window.location.href = 'leaderboard.html';
+});

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leaderboard</title>
+  <link rel="stylesheet" href="leaderboard.css">
+</head>
+<body>
+
+  <div class="leaderboard-container">
+    <button class="back-btn" onclick="window.location.href='expense.html'">
+      ← Back
+    </button>
+
+    <h1>🏆 Leaderboard</h1>
+    <p class="subtitle">Top spenders across all premium users</p>
+
+    <div id="leaderboardList" class="leaderboard-list">
+      <p class="loading">Loading...</p>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios@1.18.0/dist/axios.min.js"></script>
+  <script src="leaderboard.js"></script>
+</body>
+</html>
