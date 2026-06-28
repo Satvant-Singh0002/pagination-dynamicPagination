@@ -173,7 +173,7 @@ a:hover{
 /* premium btn */
 .premium-btn{
     position: fixed;
-    bottom: 20px;
+    bottom: 50px;
     right: 20px;
 
     padding: 12px 20px;
@@ -191,6 +191,7 @@ a:hover{
     box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     z-index: 1000;
 }
+
 
 /* Replace your existing premium-section styles with these */
 
@@ -233,10 +234,5 @@ a:hover{
     background: #16a34a;
 }
 
-#premiumBtn {
-    position: fixed;
-    top: 16px;
-    right: 16px;
-    z-index: 1000;
+
     /* your existing premium button styles */
-}

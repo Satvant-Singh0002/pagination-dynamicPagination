@@ -21,6 +21,10 @@ const User=db.define('user',{
         type:DataTypes.STRING,
         allowNull:false
     },
+    totalExpense: {
+    type: DataTypes.FLOAT,
+    defaultValue: 0
+},
      isPremiumUser: {
   type: DataTypes.BOOLEAN,
   defaultValue: false,
