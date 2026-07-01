@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Expense Tracker</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="report.css">
      <script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
+
 </head>
 <body>
     <div class="main-container">
@@ -15,15 +17,8 @@
         <label for="description">Choose Description :</label>
         <input type="text"id="description">
         <label for="Category">Choose a Category</label>
-        <select id="category"name="category"required>
-            <option value="">Select Category</option>
-            <option value="food">Food</option>
-            <option value="petrol">Petrol</option>
-            <option value="salary">Salary</option>
-            <option value="other">Other</option>
-            
-        </select>
-        <button type="submit">Add Expense</button>
+        <input type="text" id="category"name="category"placeholder="Enter category" required>
+         <button type="submit">Add Expense</button>
         
 
      </form>
@@ -47,10 +42,24 @@
 <button id="premiumBtn" class="premium-btn" onclick="buyPremium()">
     👑 Buy Premium
 </button>
+<!-- for ai report -->
+  <button id="reportBtn">🤖 Generate AI Report</button>
+    <div id="aiPopup" class="ai-popup">
+    <div class="popup-header">
+        <span>🤖 AI Expense Assistant</span>
+        <button id="closePopup">✖</button>
+    </div>
+
+    <div id="popupBody">
+    
+    </div>
+</div>
+
 <script src="
 https://cdn.jsdelivr.net/npm/axios@1.18.0/dist/axios.min.js
 "></script>
 
     <script src="expense.js"></script>
+    <script src="report.js"></script>
 </body>
 </html>

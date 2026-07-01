@@ -6,8 +6,11 @@ async function addExpense(e) {
     expenseAmount: document.getElementById("expense").value,
     description: document.getElementById("description").value,
     category: document.getElementById("category").value,
+    
   };
   try {
+   
+    // save expense 
     const token = localStorage.getItem("token");
     const response = await axios.post("http://localhost:4000/expense/addExpense", expenseData, {
       headers: { Authorization: token },
@@ -78,11 +81,11 @@ if (payload.isPremiumUser) {
     console.log(error);
   }
 
-  // ✅ Pehle URL se try karo
+  // Pehle URL se try karo
   const urlParams = new URLSearchParams(window.location.search);
   let orderId = urlParams.get("order_id");
 
-  // ✅ Nahi mila to localStorage se lo
+  // Nahi mila to localStorage se lo
   if (!orderId) {
     orderId = localStorage.getItem("pendingOrderId");
   }
@@ -101,7 +104,7 @@ async function buyPremium() {
       headers: { Authorization: token },
     });
 
-    // ✅ order_id bhi destructure karo
+    //  order_id bhi destructure karo
     const { payment_session_id, order_id } = response.data;
     localStorage.setItem("pendingOrderId", order_id);
 
@@ -138,7 +141,7 @@ const premiumSection = document.getElementById("premiumSection");
 premiumBtn.style.display = "none";
 premiumSection.style.display = "flex";
 
-  alert("🎉 Transaction Successful! You are now a Premium Member.");
+  alert(" Transaction Successful! You are now a Premium Member.");
 
 } else {
   alert("❌ TRANSACTION FAILED. Please try again.");
@@ -151,4 +154,37 @@ premiumSection.style.display = "flex";
 
 document.getElementById('leaderboardBtn').addEventListener('click', () => {
   window.location.href = 'leaderboard.html';
+});
+
+// for ai category suggestion
+let aiTimer;
+
+document.getElementById("description").addEventListener("input", function () {
+
+    clearTimeout(aiTimer);
+
+    const description = this.value.trim();
+
+    if (!description) return;
+
+    aiTimer = setTimeout(async () => {
+
+        try {
+
+            const response = await axios.post(
+                "http://localhost:4000/ai/category",
+                {
+                    description
+                }
+            );
+
+            document.getElementById("category").value =
+                response.data.category.toLowerCase();
+
+        } catch (err) {
+            console.log(err);
+        }
+
+    }, 1000); // Wait 1 second after the user stops typing
+
 });
