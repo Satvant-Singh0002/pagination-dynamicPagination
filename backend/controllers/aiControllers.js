@@ -70,7 +70,8 @@ Generate:
 
 1. Total spending summary
 2. Highest spending category
-3. Three short money saving suggestions
+3.Always analyze  and report expenses in indian Rupees (₹) only
+4. Three short money saving suggestions
 
 Keep the report short.
 `

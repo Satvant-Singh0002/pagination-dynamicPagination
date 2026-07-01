@@ -3,6 +3,7 @@ const Expense=require('../models/expenseModels');
 const User = require('../models/userModels');
 
 const addExpense = async(req,res)=>{
+    const transaction = await db.transaction();
     try{
         const {expenseAmount,description,category}=req.body;
 
@@ -11,20 +12,26 @@ const addExpense = async(req,res)=>{
             description:description,
             category:category,
              userId: req.user.userId 
-        })
+        },
+        {transaction}
+    );
 
         await User.increment(
             {totalExpense:expenseAmount},
             {
                 where:{
                     id:req.user.userId
-                }
+                },
+                transaction
             }
         );
+        await transaction.commit();
          res.status(201).json(expense);
     }catch(error){
+         await transaction.rollback();
         console.log(error);
         res.status(500).send("error while adding expense");
+       
 
     }
 
@@ -49,6 +56,7 @@ const getExpense=async(req,res)=>{
 
 }
 const deletExpense = async (req, res) => {
+    const transaction= await db.transaction();
     try {
 
         const expenseId = req.params.id;
@@ -58,10 +66,12 @@ const deletExpense = async (req, res) => {
             where: {
                 id: expenseId,
                 userId: req.user.userId
-            }
+            },
+            transaction
         });
 
         if (!expense) {
+              await transaction.rollback();
             return res.status(404).json({
                 message: "Expense not found"
             });
@@ -75,18 +85,21 @@ const deletExpense = async (req, res) => {
             {
                 where: {
                     id: req.user.userId
-                }
+                },
+                transaction
             }
         );
 
         // Delete expense
-        await expense.destroy();
-
+        
+        await expense.destroy({transaction});
+         await transaction.commit();
         res.status(200).json({
             message: "Expense deleted successfully"
         });
 
     } catch (error) {
+        await transaction.rollback();
         console.log(error);
         res.status(500).json({
             message: "Error while deleting expense"
