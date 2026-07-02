@@ -15,14 +15,12 @@ const loginRoutes=require('./Routes/loginRoutes')
 const paymentRoutes=require('./Routes/paymentRoutes');
 const premiumRoutes = require('./Routes/premiumRoutes');
 const aiRoutes = require("./Routes/aiRoutes");
-
+const forgotRoutes=require('./Routes/forgotRoutes');
 require('./models');
 app.use(express.json());
 const cors=require('cors');
 app.use(cors());
-
-
-
+app.use('/forgot', forgotRoutes);
 app.use("/ai", aiRoutes);
 app.use('/expense',expenseRoutes);
 app.use('/expenseUser',userRoutes);
