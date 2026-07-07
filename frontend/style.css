@@ -1,3 +1,4 @@
+
 *{
     margin:0;
     padding:0;
@@ -94,8 +95,8 @@ a{
 a:hover{
     text-decoration:underline;
 }
-/*dashboard expense css*/
-/* Dashboard Box */
+
+
 .expense-dashboard {
     width: 400px;
     min-height: 380px;
@@ -110,7 +111,7 @@ a:hover{
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
 }
 
-/* Dashboard Heading */
+
 .expense-dashboard h2 {
     text-align: center;
     color: white;
@@ -118,14 +119,14 @@ a:hover{
     font-size: 24px;
 }
 
-/* Expense List */
+
 .expense-list {
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
 
-/* Individual Expense Card */
+
 .expense-card {
     background: rgba(255, 255, 255, 0.2);
     border-radius: 12px;
@@ -138,21 +139,21 @@ a:hover{
     transform: translateY(-3px);
 }
 
-/* Amount */
+
 .expense-card h3 {
     color: white;
     font-size: 22px;
     margin-bottom: 8px;
 }
 
-/* Description */
+
 .expense-card p {
     color: #f5f5f5;
     margin-bottom: 10px;
     font-size: 15px;
 }
 
-/* Category Badge */
+
 .expense-card span {
     display: inline-block;
 
@@ -168,12 +169,12 @@ a:hover{
 .main-container{
     display:flex;
     align-items:flex-start;
-    gap:40px;   /* Space between form and dashboard */
+    gap:40px;  
 }
-/* premium btn */
+
 .premium-btn{
     position: fixed;
-    bottom: 50px;
+    bottom: 150px;
     right: 20px;
 
     padding: 12px 20px;
@@ -193,12 +194,13 @@ a:hover{
 }
 
 
-/* Replace your existing premium-section styles with these */
+
 
 #premiumSection {
     position: fixed;
-    top: 16px;
+    top: 20px;
     right: 16px;
+    
     display: flex;
     align-items: center;
     gap: 12px;
@@ -234,5 +236,25 @@ a:hover{
     background: #16a34a;
 }
 
+.premium-left{
+    position: fixed;
+    top: 20px;
+    left: 10px;
+}
 
-    /* your existing premium button styles */
+.download-btn{
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.download-btn:hover{
+    background: #218838;
+}
+

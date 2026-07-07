@@ -46,55 +46,120 @@ function showOnScreen(expense) {
   parent.appendChild(card);
 }
 
-window.addEventListener("DOMContentLoaded", async () => {
-  try {
+// window.addEventListener("DOMContentLoaded", async () => {
+//   try {
    
-    const token = localStorage.getItem("token");
+//     const token = localStorage.getItem("token");
 
-const payload = JSON.parse(atob(token.split(".")[1]));
+// const payload = JSON.parse(atob(token.split(".")[1]));
 
-const premiumBtn = document.getElementById("premiumBtn");
+// const premiumBtn = document.getElementById("premiumBtn");
+
+
+// const premiumSection = document.getElementById("premiumSection");
+// const leaderboardBtn = document.getElementById("leaderboardBtn");
 
 // if (payload.isPremiumUser) {
-//     premiumBtn.innerText = "⭐ Premium User";
-//     premiumBtn.disabled = true;
+//     premiumBtn.style.display = "none";
+//     premiumSection.style.display = "flex";
 // } else {
-//     premiumBtn.innerText = "BuyPremium";
-//     premiumBtn.disabled = false;
-
+//     premiumBtn.style.display = "inline-block";
+//     premiumSection.style.display = "none";
 // }
-const premiumSection = document.getElementById("premiumSection");
-const leaderboardBtn = document.getElementById("leaderboardBtn");
+//     const response = await axios.get("http://localhost:4000/expense/getExpense", {
+//       headers: { Authorization: token },
+//     });
+//     response.data.forEach((element) => showOnScreen(element));
+//   } catch (error) {
+//     console.log(error);
+//   }
 
-if (payload.isPremiumUser) {
-    premiumBtn.style.display = "none";
-    premiumSection.style.display = "flex";
-} else {
-    premiumBtn.style.display = "inline-block";
-    premiumSection.style.display = "none";
-}
-    const response = await axios.get("http://localhost:4000/expense/getExpense", {
-      headers: { Authorization: token },
-    });
-    response.data.forEach((element) => showOnScreen(element));
-  } catch (error) {
-    console.log(error);
-  }
+//   // Pehle URL se try karo
+//   const urlParams = new URLSearchParams(window.location.search);
+//   let orderId = urlParams.get("order_id");
 
-  // Pehle URL se try karo
-  const urlParams = new URLSearchParams(window.location.search);
-  let orderId = urlParams.get("order_id");
+//   // Nahi mila to localStorage se lo
+//   if (!orderId) {
+//     orderId = localStorage.getItem("pendingOrderId");
+//   }
 
-  // Nahi mila to localStorage se lo
-  if (!orderId) {
-    orderId = localStorage.getItem("pendingOrderId");
-  }
+//   if (orderId) {
+//     localStorage.removeItem("pendingOrderId");
+//     await verifyAndShowResult(orderId);
+//     window.history.replaceState({}, document.title, window.location.pathname);
+//   }
+// });
+window.addEventListener("DOMContentLoaded", async () => {
+    try {
 
-  if (orderId) {
-    localStorage.removeItem("pendingOrderId");
-    await verifyAndShowResult(orderId);
-    window.history.replaceState({}, document.title, window.location.pathname);
-  }
+        const token = localStorage.getItem("token");
+
+        if (!token) {
+            return;
+        }
+
+        const payload = JSON.parse(atob(token.split(".")[1]));
+        console.log("payload:",payload);
+        const premiumBtn = document.getElementById("premiumBtn");
+        const premiumSection = document.getElementById("premiumSection");
+        const premiumFeatures = document.getElementById("premiumFeatures");
+
+        // Premium UI
+        if (payload.isPremiumUser) {
+            premiumBtn.style.display = "none";
+            premiumSection.style.display = "flex";
+
+            if (premiumFeatures) {
+                premiumFeatures.style.display = "block";
+            }
+
+        } else {
+            premiumBtn.style.display = "inline-block";
+            premiumSection.style.display = "none";
+
+            if (premiumFeatures) {
+                premiumFeatures.style.display = "none";
+            }
+        }
+
+        // Load Expenses
+        const response = await axios.get(
+            "http://localhost:4000/expense/getExpense",
+            {
+                headers: {
+                    Authorization: token
+                }
+            }
+        );
+
+        response.data.forEach((expense) => {
+            showOnScreen(expense);
+        });
+
+    } catch (error) {
+        console.log(error);
+    }
+
+    // Payment Verification
+    const urlParams = new URLSearchParams(window.location.search);
+
+    let orderId = urlParams.get("order_id");
+
+    if (!orderId) {
+        orderId = localStorage.getItem("pendingOrderId");
+    }
+
+    if (orderId) {
+        localStorage.removeItem("pendingOrderId");
+
+        await verifyAndShowResult(orderId);
+
+        window.history.replaceState(
+            {},
+            document.title,
+            window.location.pathname
+        );
+    }
 });
 
 async function buyPremium() {
@@ -132,9 +197,7 @@ async function verifyAndShowResult(orderId) {
 
   localStorage.setItem("token", response.data.token);
 
-  // const premiumBtn = document.getElementById("premiumBtn");
-  // premiumBtn.innerText = "⭐ PremiumUser show leaderboard";
-  // premiumBtn.disabled = true;
+  
   const premiumBtn = document.getElementById("premiumBtn");
 const premiumSection = document.getElementById("premiumSection");
 
@@ -188,3 +251,32 @@ document.getElementById("description").addEventListener("input", function () {
     }, 1000); // Wait 1 second after the user stops typing
 
 });
+
+// for download expenses
+
+document.getElementById("downloadBtn").addEventListener("click", downloadExpense);
+async function downloadExpense(){
+  try{
+    const token = localStorage.getItem("token");
+    const response = await axios.get(
+      "http://localhost:4000/user/downloadExpense",
+      {
+        headers:{
+          Authorization:token
+        },
+        responseType:"blob"
+      }
+
+    );
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+    const a = document.createElement("a");
+    a.href = url;
+    a.download ="expenses.csv";
+    a.click();
+    window.URL.revokeObjectURL(url);
+
+  }catch(err){
+    console.log(err);
+    alert("download failed");
+  }
+}
